@@ -1,220 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Multi step contact us form</title>
-    <link
-      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
-  </head>
+<?php
 
-  <body>
-    <div class="mt-8">
-      <h2
-        class="
-          mb-4
-          text-2xl
-          font-bold
-          text-center text-gray-800
-          lg:text-3xl
-          md:mb-6
-        "
-      >
-        Get in touch
-      </h2>
+// Check PHP version.
+$minPhpVersion = '7.4'; // If you update this, don't forget to update `spark`.
+if (version_compare(PHP_VERSION, $minPhpVersion, '<')) {
+    $message = sprintf(
+        'Your PHP version must be %s or higher to run CodeIgniter. Current version: %s',
+        $minPhpVersion,
+        PHP_VERSION
+    );
 
-      <p class="max-w-screen-md mx-auto text-center text-gray-500 md:text-lg">
-        Please fill in the details below so that we can get in contact with you.
-      </p>
-    </div>
-    <div class="text-gray-600">
-      <div class="container flex flex-col flex-wrap px-5 py-4 mx-auto">
-        <div class="flex flex-wrap mx-auto">
-          <a
-            class="
-              inline-flex
-              items-center
-              justify-center
-              w-1/2
-              py-3
-              font-medium
-              leading-none
-              tracking-wider
-              text-indigo-500
-              bg-gray-100
-              border-b-2 border-indigo-500
-              rounded-t
-              sm:px-6 sm:w-auto sm:justify-start
-              title-font
-            "
-          >
-            STEP 1
-          </a>
-          <a
-            class="
-              inline-flex
-              items-center
-              justify-center
-              w-1/2
-              py-3
-              font-medium
-              leading-none
-              tracking-wider
-              border-b-2 border-gray-200
-              sm:px-6 sm:w-auto sm:justify-start
-              title-font
-              hover:text-gray-900
-            "
-          >
-            STEP 2
-          </a>
-          <a
-            class="
-              inline-flex
-              items-center
-              justify-center
-              w-1/2
-              py-3
-              font-medium
-              leading-none
-              tracking-wider
-              border-b-2 border-gray-200
-              sm:px-6 sm:w-auto sm:justify-start
-              title-font
-              hover:text-gray-900
-            "
-          >
-            STEP 3
-          </a>
-        </div>
-        <div class="flex flex-col w-full text-center">
-          <div class="py-6 bg-white sm:py-8 lg:py-12">
-            <div class="px-4 mx-auto max-w-screen-2xl md:px-8">
-              <!-- form - start -->
-              <form class="max-w-screen-md mx-auto">
-                <div class="flex flex-col mb-4">
-                  <label
-                    for="name"
-                    class="inline-flex mb-2 text-sm text-gray-800"
-                    >Please enter your name</label
-                  >
-                  <input
-                    name="name"
-                    class="
-                      w-full
-                      px-3
-                      py-2
-                      text-gray-800
-                      border
-                      rounded
-                      outline-none
-                      bg-gray-50
-                      focus:ring
-                      ring-indigo-300
-                    "
-                  />
-                </div>
+    exit($message);
+}
 
-                <div class="flex flex-col mb-4">
-                  <label
-                    for="phone"
-                    class="inline-flex mb-2 text-sm text-gray-800"
-                    >Please enter a phone number</label
-                  >
-                  <input
-                    name="phone"
-                    class="
-                      w-full
-                      px-3
-                      py-2
-                      text-gray-800
-                      border
-                      rounded
-                      outline-none
-                      bg-gray-50
-                      focus:ring
-                      ring-indigo-300
-                    "
-                  />
-                </div>
+// Path to the front controller (this file)
+define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR);
 
-                <div class="flex flex-col mb-2">
-                  <label
-                    for="company"
-                    class="inline-flex mb-2 text-sm text-gray-800"
-                    >Please enter your company name (optional)</label
-                  >
-                  <input
-                    name="company"
-                    class="
-                      w-full
-                      px-3
-                      py-2
-                      text-gray-800
-                      border
-                      rounded
-                      outline-none
-                      bg-gray-50
-                      focus:ring
-                      ring-indigo-300
-                    "
-                  />
-                </div>
+// Ensure the current directory is pointing to the front controller's directory
+chdir(FCPATH);
 
-                <div class="flex items-center justify-between">
-                  <button
-                    class="
-                      inline-flex
-                      items-center
-                      px-6
-                      py-2
-                      text-sm text-gray-800
-                      rounded-lg
-                      shadow
-                      outline-none
-                      gap-x-1
-                      hover:bg-gray-100
-                    "
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="w-4 h-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M10 19l-7-7m0 0l7-7m-7 7h18"
-                      /></svg
-                    >Back
-                  </button>
-                  <button
-                    class="
-                      px-6
-                      py-2
-                      text-sm text-white
-                      bg-indigo-500
-                      rounded-lg
-                      outline-none
-                      hover:bg-indigo-600
-                      ring-indigo-300
-                    "
-                  >
-                    Next
-                  </button>
-                </div>
-              </form>
-              <!-- form - end -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </body>
-</html>
+/*
+ *---------------------------------------------------------------
+ * BOOTSTRAP THE APPLICATION
+ *---------------------------------------------------------------
+ * This process sets up the path constants, loads and registers
+ * our autoloader, along with Composer's, loads our constants
+ * and fires up an environment-specific bootstrapping.
+ */
+
+// Load our paths config file
+// This is the line that might need to be changed, depending on your folder structure.
+require FCPATH . '../app/Config/Paths.php';
+// ^^^ Change this line if you move your application folder
+
+$paths = new Config\Paths();
+
+// Location of the framework bootstrap file.
+require rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'bootstrap.php';
+
+// Load environment settings from .env files into $_SERVER and $_ENV
+require_once SYSTEMPATH . 'Config/DotEnv.php';
+(new CodeIgniter\Config\DotEnv(ROOTPATH))->load();
+
+/*
+ * ---------------------------------------------------------------
+ * GRAB OUR CODEIGNITER INSTANCE
+ * ---------------------------------------------------------------
+ *
+ * The CodeIgniter class contains the core functionality to make
+ * the application run, and does all of the dirty work to get
+ * the pieces all working together.
+ */
+
+$app = Config\Services::codeigniter();
+$app->initialize();
+$context = is_cli() ? 'php-cli' : 'web';
+$app->setContext($context);
+
+/*
+ *---------------------------------------------------------------
+ * LAUNCH THE APPLICATION
+ *---------------------------------------------------------------
+ * Now that everything is setup, it's time to actually fire
+ * up the engines and make this app do its thang.
+ */
+
+$app->run();
