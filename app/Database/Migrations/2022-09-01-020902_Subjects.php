@@ -24,16 +24,25 @@ class Subjects extends Migration
                 'type'       => 'VARCHAR',
                 'constraint' => '500',
             ],
+            'cost' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '500',
+            ],
+            'guide' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '500',
+            ],
+            
             'created_at datetime default current_timestamp',
             'updated_on datetime default current_timestamp on update current_timestamp',
         ]);
         $this->forge->addKey('id', true);
         $this->forge->addForeignKey('class_id', 'class_level', 'id', 'CASCADE', 'CASCADE');
-        $this->forge->createTable('subjects');
+        $this->forge->createTable('products');
     }
 
     public function down()
     {
-        $this->forge->dropTable('subjects');
+        $this->forge->dropTable('products');
     }
 }
