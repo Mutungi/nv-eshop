@@ -43,7 +43,8 @@
                             </ul>
                         </div>
         
-                        <form role="form" action="/store/order" class="login-box order_form">
+                        <form role="form" method="POST" action="<?= route_to('make.order') ?>" class="login-box order_form">
+                            <?= csrf_field() ?>
                             <div class="tab-content" id="main_form">
                                 <div class="tab-pane active" role="tabpanel" id="step1">
                                     <!-- <h4 class="text-center">Step 1</h4> -->
@@ -74,7 +75,7 @@
                                     <div class="table_section"></div>
                                     <ul class="list-inline pull-right">
                                         <li><button type="button" class="default-btn prev-step">Back</button></li>
-                                        <li><button type="button" class="default-btn next-step skip-btn">Skip</button></li>
+                                        <!-- <li><button type="button" class="default-btn next-step skip-btn">Skip</button></li> -->
                                         <li><button type="button" class="default-btn next-step">Proceed</button></li>
                                     </ul>
                                 </div>
@@ -82,7 +83,7 @@
                                     <div class="summary_section"></div>
                                     <ul class="list-inline pull-right">
                                         <li><button type="button" class="default-btn prev-step">Back</button></li>
-                                        <li><button type="button" class="default-btn next-step skip-btn">Skip</button></li>
+                                        <!-- <li><button type="button" class="default-btn next-step skip-btn">Skip</button></li> -->
                                         <li><button type="button" class="default-btn next-step">Proceed</button></li>
                                     </ul>
                                 </div>
@@ -103,7 +104,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Phone Number <small class="text-danger">*</small></label> 
-                                                <input autocomplete="off" class="form-control" type="text" name="phone" required placeholder=""> 
+                                                <input autocomplete="off" class="form-control" type="text" name="contact" required placeholder=""> 
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -122,7 +123,7 @@
                                     </div>
                                     <ul class="list-inline pull-right">
                                         <li><button type="button" class="default-btn prev-step">Back</button></li>
-                                        <li><button type="button" class="default-btn next-step">Finish</button></li>
+                                        <li><button type="submit" class="btn btn-success">Make Order</button></li>
                                     </ul>
                                 </div>
                                 <div class="clearfix"></div>
@@ -139,6 +140,7 @@
 <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'></script>
 <script  src="<?php echo base_url(); ?>/statics/js/script.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.8.1/dist/sweetalert2.all.min.js"></script>
 <script>
     $(function () {
         $('select').select2({
@@ -164,6 +166,79 @@
 			});
 		});
 
+        $("form.order_form").submit(function(e) {
+            e.preventDefault();
+            console.log($("form.order_form").serializeArray());
+            Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You want to Confirm This Order!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, I Confirm!'
+                }).then((result) => {
+                    if (result.value) {
+                        //console.log(key);
+                        $.ajax({
+                            type: "POST",
+                            dataType: "json",
+                            url: "<?= route_to('make.order') ?>",
+                            data: $("form.order_form").serialize(),
+                            beforeSend: function() {
+                                let timerInterval
+                                Swal.fire({
+                                title: 'Please Wait As We Confirm Your Order!',
+                                html: 'I will close in a few<b></b> milliseconds.',
+                                timer: 105000,
+                                timerProgressBar: true,
+                                didOpen: () => {
+                                    Swal.showLoading()
+                                    const b = Swal.getHtmlContainer().querySelector('b')
+                                    timerInterval = setInterval(() => {
+                                    b.textContent = Swal.getTimerLeft()
+                                    }, 100)
+                                },
+                                willClose: () => {
+                                    clearInterval(timerInterval)
+                                }
+                                }).then((result) => {
+                                /* Read more about handling dismissals below */
+                                if (result.dismiss === Swal.DismissReason.timer) {
+                                    console.log('I was closed by the timer')
+                                }
+                                })
+                            },
+                            success: function(res) {
+                                console.log(res);
+                                Swal.close()
+                                if(res){
+                                    Swal.fire(
+                                        'Order Recieved!',
+                                        'Your order has been recieved.',
+                                        'success'
+                                    );
+                                    // setTimeout(function() {
+                                    //     window.location.reload();
+                                    // }, 3000);
+                                }else{
+                                    Swal.fire(
+                                        'Opp!!!!',
+                                        'Something Went Wrong',
+                                        'danger'
+                                    );
+                                   // console.log(jqXHR);
+                                }
+                                
+                            },
+                            error: function(jqXHR) {
+                                console.log(jqXHR);
+                            }
+                        });
+                    }
+                });
+        });
+
         
     });
     function numberWithCommas(number) {
@@ -180,6 +255,8 @@
         $("input[name='summary_"+ele_pointer+"']").val(total);
         $(".summary_"+ele_pointer).empty().html(numberWithCommas(total)+'/=');
     }
+
+    
 </script>
 </body>
 </html>

@@ -41,7 +41,7 @@ class Home extends BaseController
             $summary_html = '';
             foreach($levels as $key){
                 $products = $products_model->where('class_id', $key['id'])->findAll();
-                $html .= '<h4 class="text-center text-danger">'.$key['level'].'</h4>';
+                $html .= '<h4 class="text-center text-danger">'.$key['level'].' Packages</h4>';
                 $html .= $this->table_structure($products);
                 $html .= '<div class="clearfix"></div>';
 
@@ -93,6 +93,8 @@ class Home extends BaseController
         $html .= '</tbody></table>';
         return $html;
     }
+
+
 
 
 
