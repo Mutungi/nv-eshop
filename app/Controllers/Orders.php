@@ -8,6 +8,7 @@ class Orders extends BaseController
     {
         helper('url','form');
     }
+    /** Making An Order */
     public function make_order()
     {
         $model = model(OrdersModel::class);
@@ -38,11 +39,12 @@ class Orders extends BaseController
                 'selected_products'  => $selected_products,
                 'comment'  => $comment,
             ];
+            //saves the data
             if($model->save($data)){
                 if($this->checkIfUserOnline()){
                     //publishing@newvision.co.ug
                     $html_template = $this->email_template($data);
-                    $to = 'ianmutungi00@gmail.com';
+                    $to = 'publishing@newvision.co.ug';
                     $email_instance = \Config\Services::email();
                     $email_instance->setTo($to);
                     $email_instance->setFrom($email, $name);
@@ -66,7 +68,7 @@ class Orders extends BaseController
             echo json_encode(array('status'=>false,'validation'=> $this->validator));
         }
     }
-
+    /** Checks If User is Online */
     public function checkIfUserOnline($site = 'https://google.com'){
         if(fopen($site, "r")){
             return true;
@@ -74,7 +76,7 @@ class Orders extends BaseController
             return false;
         }
     }
-
+    /** Generates html email template */
     public function email_template($data){
         $a = json_decode($data['selected_products'],true);
         $books = [];
