@@ -5,7 +5,7 @@ After you have cloned the application from github.
 
 Edit the .env file and add your database configuration after create your database name and run migrations to create tables see commands below
 
-Edit the file in app/Config/Email.php and add your prefered mailing server
+Edit the file in app/Config/Email.php and add your prefered mailing server credentials
 
 After Run The Following Commands
 - php spark migrate
