@@ -37,6 +37,8 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 $routes->get('/product/menu/(:num)', 'Home::api_get_product_menu/$1');
+$routes->post('/make/order', 'Orders::make_order', ['as' => 'make.order']);
+$routes->get('/test/email', 'Home::email_template_test');
 /*
  * --------------------------------------------------------------------
  * Additional Routing
